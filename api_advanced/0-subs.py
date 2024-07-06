@@ -1,15 +1,21 @@
 #!/usr/bin/python3
-"""Return number of subscribers for a given subreddit"""
+"""
+Returns the number of subscribers from a subreddit
+"""
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """Return the number of subscribers """
-    url = "https://www.reddit.com/r/{}/about.json" \
-        .format(subreddit)
-    headers = {'User-Agent': 'My User Agent 1.0'}
-    response = requests.get(url, headers=headers)
+    """ Set a custom header user-agent """
+    headers = {"User-Agent": "ALU-scripting API 0.1"}
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    try:
+        response = requests.get(url, allow_redirects=False)
+    except requests.exceptions.RequestException:
+        return 0
+
     if response.status_code == 200:
-        return response.json().get('data') \
-            .get('subscribers')
-    return 0
+        data = response.json()
+        return data.get("data", {}).get("subscribers", 0)
+    else:
+        return 0
