@@ -2,6 +2,7 @@
 """ Get the titles of the first 10 hot posts for a given subreddit."""
 import requests
 
+
 def top_ten(subreddit):
 
     headers = {'User-Agent': 'MyAPI/0.0.1'}
